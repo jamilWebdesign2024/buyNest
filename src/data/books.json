@@ -1,0 +1,108 @@
+{
+    "books": [
+        {
+            "title": "Atomic Habits",
+            "author": "James Clear",
+            "publisher": "Penguin Random House",
+            "published_year": 2018,
+            "isbn": "9780735211292",
+            "genre": [
+                "Self-help",
+                "Productivity",
+                "Psychology"
+            ],
+            "language": "English",
+            "pages": 320,
+            "price": 18.99,
+            "currency": "USD",
+            "stock": 42,
+            "rating": 4.8,
+            "format": "Paperback",
+            "description": "A practical guide to building good habits and breaking bad ones using proven psychological strategies.",
+            "image": "https://readersmeet.com/wp-content/uploads/2024/07/Top-5-financial-lessons-from-Rich-Dad-Poor-Dad-1.jpg"
+        },
+        {
+            "title": "The Lean Startup",
+            "author": "Eric Ries",
+            "publisher": "Crown Business",
+            "published_year": 2011,
+            "isbn": "9780307887894",
+            "genre": [
+                "Business",
+                "Entrepreneurship",
+                "Management"
+            ],
+            "language": "English",
+            "pages": 336,
+            "price": 21.5,
+            "currency": "USD",
+            "stock": 30,
+            "rating": 4.5,
+            "format": "Hardcover",
+            "description": "How today's entrepreneurs use continuous innovation to create radically successful businesses.",
+            "image": "https://readersmeet.com/wp-content/uploads/2024/07/Top-5-financial-lessons-from-Rich-Dad-Poor-Dad-1.jpg"
+        },
+        {
+            "title": "Clean Code",
+            "author": "Robert C. Martin",
+            "publisher": "Prentice Hall",
+            "published_year": 2008,
+            "isbn": "9780132350884",
+            "genre": [
+                "Programming",
+                "Software Engineering"
+            ],
+            "language": "English",
+            "pages": 464,
+            "price": 32.99,
+            "currency": "USD",
+            "stock": 15,
+            "rating": 4.7,
+            "format": "eBook",
+            "description": "A handbook of agile software craftsmanship providing best practices for writing clean and maintainable code.",
+            "image": "https://readersmeet.com/wp-content/uploads/2024/07/Top-5-financial-lessons-from-Rich-Dad-Poor-Dad-1.jpg"
+        },
+        {
+            "title": "Sapiens: A Brief History of Humankind",
+            "author": "Yuval Noah Harari",
+            "publisher": "Harper",
+            "published_year": 2015,
+            "isbn": "9780062316110",
+            "genre": [
+                "History",
+                "Anthropology",
+                "Non-fiction"
+            ],
+            "language": "English",
+            "pages": 498,
+            "price": 19.99,
+            "currency": "USD",
+            "stock": 25,
+            "rating": 4.6,
+            "format": "Paperback",
+            "description": "Explores the history of humankind from the Stone Age to the modern age, analyzing how biology and history have shaped societies.",
+            "image": "https://readersmeet.com/wp-content/uploads/2024/07/Top-5-financial-lessons-from-Rich-Dad-Poor-Dad-1.jpg"
+        },
+        {
+            "title": "Rich Dad Poor Dad",
+            "author": "Robert T. Kiyosaki",
+            "publisher": "Plata Publishing",
+            "published_year": 1997,
+            "isbn": "9781612680194",
+            "genre": [
+                "Finance",
+                "Self-help",
+                "Business"
+            ],
+            "language": "English",
+            "pages": 336,
+            "price": 15.95,
+            "currency": "USD",
+            "stock": 50,
+            "rating": 4.4,
+            "format": "Paperback",
+            "description": "Personal finance classic that contrasts two approaches to money management and wealth building.",
+            "image": "https://readersmeet.com/wp-content/uploads/2024/07/Top-5-financial-lessons-from-Rich-Dad-Poor-Dad-1.jpg"
+        }
+    ]
+}

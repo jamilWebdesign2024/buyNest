@@ -1,5 +1,8 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Navbar from "./components/Navbar";
+import { Toaster } from "@/components/ui/sonner";
+import ThemeProvider from "./providers/ThemeProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,11 +21,21 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <Navbar />
+          <main className="min-h-screen">
+            {children}
+          </main>
+
+          <footer className="text-center bg-slate-600">
+            Awesome NextJs Project
+          </footer>
+          <Toaster position="top-right" />
+        </ThemeProvider>
       </body>
     </html>
   );
