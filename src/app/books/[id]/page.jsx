@@ -5,15 +5,15 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Star, BookOpen, LibraryBig } from "lucide-react";
 import Image from "next/image";
+import dbConnect, { collectionName } from "@/lib/dbConnect";
+import { ObjectId } from "mongodb";
 
 export default async function BookDetailsPage({ params }) {
-    const p = await params
-    console.log(p.id);
 
-    const res = await fetch(`http://localhost:3000/api/products/${p.id}`, {
-        cache: "no-store",   // optional, যেন SSR এ fresh data আসে
-    });
-    const book = await res.json();
+    const p = await params;
+    // Fetch product directly from MongoDB
+    const book = await dbConnect(collectionName.PRODUCTS).findOne({ _id: new ObjectId(p.id) });
+
     if (!book) {
         return (
             <div className="container mx-auto py-20 text-center">
@@ -96,3 +96,5 @@ export default async function BookDetailsPage({ params }) {
         </div>
     );
 }
+
+

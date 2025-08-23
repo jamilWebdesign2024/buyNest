@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, ShoppingBag, User, LogOut, Settings } from "lucide-react";
+import { signOut, useSession } from "next-auth/react";
+import { Menu, ShoppingBag, LogOut, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
     Sheet,
@@ -22,38 +22,20 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import ThemeToggle from "./ThemeToggle";
 
-// Mock user state - replace with your actual auth logic
-const useAuth = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [user, setUser] = useState({ name: "John Doe", email: "john@example.com", avatar: "" });
-
-    const login = () => setIsLoggedIn(true);
-    const logout = () => setIsLoggedIn(false);
-
-    return { isLoggedIn, user, login, logout };
-};
-
 export default function Navbar() {
-    const [isOpen, setIsOpen] = useState(false);
     const pathname = usePathname();
-    const { isLoggedIn, user, login, logout } = useAuth();
+    const { data: session } = useSession();
+
+    const isLoggedIn = !!session?.user;
+    const user = session?.user;
 
     const navLinks = [
         { href: "/", label: "Home" },
         { href: "/products", label: "Products" },
         ...(isLoggedIn ? [{ href: "/dashboard", label: "Dashboard" }] : []),
-    
     ];
 
     const isActive = (path) => pathname === path;
-
-    const handleAuth = () => {
-        if (isLoggedIn) {
-            logout();
-        } else {
-            login();
-        }
-    };
 
     return (
         <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -70,9 +52,7 @@ export default function Navbar() {
                         <Link
                             key={link.href}
                             href={link.href}
-                            className={`text-sm font-medium transition-colors hover:text-primary ${isActive(link.href)
-                                    ? "text-primary"
-                                    : "text-muted-foreground"
+                            className={`text-sm font-medium transition-colors hover:text-primary ${isActive(link.href) ? "text-primary" : "text-muted-foreground"
                                 }`}
                         >
                             {link.label}
@@ -89,18 +69,16 @@ export default function Navbar() {
                             <DropdownMenuTrigger asChild>
                                 <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                                     <Avatar className="h-8 w-8">
-                                        <AvatarImage src={user.avatar} alt={user.name} />
-                                        <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+                                        <AvatarImage src={user?.image || ""} alt={user?.name || ""} />
+                                        <AvatarFallback>{user?.name?.charAt(0) || "U"}</AvatarFallback>
                                     </Avatar>
                                 </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent className="w-56" align="end" forceMount>
-                                <div className="flex items-center justify-start gap-2 p-2">
-                                    <div className="flex flex-col space-y-1 leading-none">
-                                        <p className="font-medium">{user.name}</p>
-                                        <p className="w-[200px] truncate text-sm text-muted-foreground">
-                                            {user.email}
-                                        </p>
+                                <div className="flex items-center gap-2 p-2">
+                                    <div className="flex flex-col">
+                                        <p className="font-medium">{user?.name}</p>
+                                        <p className="text-sm text-muted-foreground">{user?.email}</p>
                                     </div>
                                 </div>
                                 <DropdownMenuSeparator />
@@ -111,7 +89,10 @@ export default function Navbar() {
                                     </Link>
                                 </DropdownMenuItem>
                                 <DropdownMenuSeparator />
-                                <DropdownMenuItem onClick={logout} className="text-red-600">
+                                <DropdownMenuItem
+                                    onClick={() => signOut({ callbackUrl: "/" })}
+                                    className="text-red-600"
+                                >
                                     <LogOut className="mr-2 h-4 w-4" />
                                     Logout
                                 </DropdownMenuItem>
@@ -120,10 +101,10 @@ export default function Navbar() {
                     ) : (
                         <div className="flex items-center space-x-2">
                             <Button variant="ghost" asChild>
-                                <Link href="auth/login">Login</Link>
+                                <Link href="/auth/login">Login</Link>
                             </Button>
                             <Button asChild>
-                                <Link href="auth/register">Register</Link>
+                                <Link href="/auth/register">Register</Link>
                             </Button>
                         </div>
                     )}
@@ -132,7 +113,7 @@ export default function Navbar() {
                 {/* Mobile Menu */}
                 <div className="flex items-center space-x-2 md:hidden">
                     <ThemeToggle />
-                    <Sheet open={isOpen} onOpenChange={setIsOpen}>
+                    <Sheet>
                         <SheetTrigger asChild>
                             <Button variant="ghost" size="sm" className="px-2">
                                 <Menu className="h-5 w-5" />
@@ -145,19 +126,18 @@ export default function Navbar() {
                             </SheetHeader>
                             <div className="flex flex-col space-y-4 mt-4">
                                 {/* Mobile Logo */}
-                                <Link href="/" className="flex items-center space-x-2 mb-4" onClick={() => setIsOpen(false)}>
+                                <Link href="/" className="flex items-center space-x-2 mb-4">
                                     <ShoppingBag className="h-6 w-6 text-primary" />
                                     <span className="text-xl font-bold">BuyNest</span>
                                 </Link>
 
-                                {/* Mobile Navigation Links */}
+                                {/* Mobile Navigation */}
                                 <nav className="flex flex-col space-y-2">
                                     {navLinks.map((link) => (
                                         <Link
                                             key={link.href}
                                             href={link.href}
-                                            onClick={() => setIsOpen(false)}
-                                            className={`text-sm font-medium transition-colors hover:text-primary p-2 rounded-md ${isActive(link.href)
+                                            className={`p-2 rounded-md text-sm font-medium transition-colors ${isActive(link.href)
                                                     ? "text-primary bg-accent"
                                                     : "text-muted-foreground hover:bg-accent"
                                                 }`}
@@ -173,21 +153,18 @@ export default function Navbar() {
                                         <div className="space-y-4">
                                             <div className="flex items-center space-x-3 p-2">
                                                 <Avatar className="h-8 w-8">
-                                                    <AvatarImage src={user.avatar} alt={user.name} />
-                                                    <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+                                                    <AvatarImage src={user?.image || ""} alt={user?.name || ""} />
+                                                    <AvatarFallback>{user?.name?.charAt(0) || "U"}</AvatarFallback>
                                                 </Avatar>
                                                 <div className="flex flex-col">
-                                                    <p className="font-medium text-sm">{user.name}</p>
-                                                    <p className="text-xs text-muted-foreground">{user.email}</p>
+                                                    <p className="font-medium text-sm">{user?.name}</p>
+                                                    <p className="text-xs text-muted-foreground">{user?.email}</p>
                                                 </div>
                                             </div>
                                             <Button
                                                 variant="ghost"
                                                 className="w-full justify-start text-red-600 hover:text-red-600 hover:bg-red-50"
-                                                onClick={() => {
-                                                    logout();
-                                                    setIsOpen(false);
-                                                }}
+                                                onClick={() => signOut({ callbackUrl: "/" })}
                                             >
                                                 <LogOut className="mr-2 h-4 w-4" />
                                                 Logout
@@ -196,15 +173,10 @@ export default function Navbar() {
                                     ) : (
                                         <div className="flex flex-col space-y-2">
                                             <Button variant="ghost" className="justify-start" asChild>
-                                                <Link href="/login" onClick={() => setIsOpen(false)}>
-                                                    <User className="mr-2 h-4 w-4" />
-                                                    Login
-                                                </Link>
+                                                <Link href="/auth/login">Login</Link>
                                             </Button>
                                             <Button className="justify-start" asChild>
-                                                <Link href="/register" onClick={() => setIsOpen(false)}>
-                                                    Register
-                                                </Link>
+                                                <Link href="/auth/register">Register</Link>
                                             </Button>
                                         </div>
                                     )}
