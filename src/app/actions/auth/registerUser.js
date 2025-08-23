@@ -1,6 +1,8 @@
 "use server";
-import dbConnect, { collectionName } from '@/lib/dbConnect';
+
+import dbConnect, { collectionName } from "@/lib/dbConnect";
 import bcrypt from 'bcrypt'
+
 
 export const registerUser = async (payload) => {
     try {

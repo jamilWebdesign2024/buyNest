@@ -42,6 +42,7 @@ export default function Navbar() {
         { href: "/", label: "Home" },
         { href: "/products", label: "Products" },
         ...(isLoggedIn ? [{ href: "/dashboard", label: "Dashboard" }] : []),
+    
     ];
 
     const isActive = (path) => pathname === path;
@@ -119,10 +120,10 @@ export default function Navbar() {
                     ) : (
                         <div className="flex items-center space-x-2">
                             <Button variant="ghost" asChild>
-                                <Link href="/login">Login</Link>
+                                <Link href="auth/login">Login</Link>
                             </Button>
                             <Button asChild>
-                                <Link href="/register">Register</Link>
+                                <Link href="auth/register">Register</Link>
                             </Button>
                         </div>
                     )}

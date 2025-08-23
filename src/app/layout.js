@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "./components/Navbar";
 import { Toaster } from "@/components/ui/sonner";
 import ThemeProvider from "./providers/ThemeProvider";
+import NextAuthProvider from "./providers/NextAuthProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,18 +26,19 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Navbar />
-          <main className="min-h-screen">
-            {children}
-          </main>
+        <NextAuthProvider>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <Navbar />
+            <main className="min-h-screen">{children}</main>
 
-          <footer className="text-center bg-slate-600">
-            Awesome NextJs Project
-          </footer>
-          <Toaster position="top-right" />
-        </ThemeProvider>
+            <footer className="text-center bg-slate-600">
+              Awesome NextJs Project
+            </footer>
+            <Toaster position="top-right" />
+          </ThemeProvider>
+        </NextAuthProvider>
       </body>
     </html>
   );
 }
+

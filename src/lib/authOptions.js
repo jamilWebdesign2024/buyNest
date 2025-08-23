@@ -1,9 +1,11 @@
+// import { loginUser } from "@/app/actions/auth/loginUser";
+import { loginUser } from "@/app/actions/auth/loginUser";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
-// import dbConnect, { collectionName } from "./dbConnect";
+
 import { signIn } from "next-auth/react";
-import { loginUser } from "@/app/actions/auth/loginUser";
 import dbConnect, { collectionName } from "./dbConnect";
+
 
 export const authOptions = {
     providers: [
