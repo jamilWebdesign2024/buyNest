@@ -1,84 +1,110 @@
 
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
+
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Star, BookOpen, ShoppingCart } from "lucide-react";
+import { Star, BookOpen, ShoppingCart, Eye, Bookmark } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-
 export default function BookCard({ book }) {
     return (
-        <Card className="w-full h-full overflow-hidden transition-all duration-300 hover:shadow-lg flex flex-col">
-            {/* Book Image */}
-            <div className="relative h-48 w-full overflow-hidden">
+        <Card className="group h-full overflow-hidden transition-all duration-300 hover:shadow-md flex flex-col">
+            {/* Book Image with Overlay */}
+            <div className="relative h-52 w-full overflow-hidden">
                 {book.image && (
                     <Image
                         src={book.image}
                         alt={book.title}
                         fill
-                        className="object-cover"
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
                 )}
-                <div className="absolute top-2 left-2">
-                    <Badge variant="secondary" className="text-xs">
+
+                {/* Format Badge */}
+                <div className="absolute top-3 left-3">
+                    <Badge
+                        variant="secondary"
+                        className="text-xs font-medium px-2 py-1 backdrop-blur-sm bg-background/80"
+                    >
                         {book.format}
                     </Badge>
                 </div>
-                <div className="absolute top-2 right-2 flex items-center bg-background/80 backdrop-blur-sm rounded-full px-2 py-1">
-                    <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-                    <span className="ml-1 text-xs font-medium">{book.rating}</span>
+
+                {/* Rating Badge */}
+                <div className="absolute top-3 right-3 flex items-center bg-background/90 backdrop-blur-sm rounded-full px-2 py-1">
+                    <Star className="h-3 w-3 fill-primary text-primary mr-1" />
+                    <span className="text-xs font-medium">{book.rating}</span>
+                </div>
+
+                {/* Hover Overlay with Quick Actions */}
+                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-2">
+                    <Button size="sm" className="rounded-full h-10 w-10 p-0">
+                        <Bookmark className="h-4 w-4" />
+                    </Button>
+                    <Button size="sm" className="rounded-full">
+                        <Eye className="h-4 w-4 mr-1" />
+                        Preview
+                    </Button>
                 </div>
             </div>
 
-            <CardHeader className="pb-3">
-                <CardTitle className="text-xl leading-tight line-clamp-2 h-14">
+            <CardHeader className="pb-3 px-5 pt-5">
+                <h3 className="font-semibold leading-tight line-clamp-2 text-foreground group-hover:text-primary transition-colors">
                     {book.title}
-                </CardTitle>
+                </h3>
                 <p className="text-sm text-muted-foreground">by {book.author}</p>
             </CardHeader>
 
-            <CardContent className="pb-3 flex-grow">
+            <CardContent className="pb-3 px-5 flex-grow">
                 <div className="flex items-center mb-3 text-sm text-muted-foreground">
                     <BookOpen className="h-4 w-4 mr-1" />
-                    <span>{book.pages} pages</span>
+                    <span>{book.pages} pages • {book.published_year}</span>
                 </div>
 
-                <p className="text-sm line-clamp-3 h-16 mb-3">
+                <p className="text-sm text-muted-foreground line-clamp-3 mb-4">
                     {book.description}
                 </p>
 
-                <div className="flex flex-wrap gap-1 mb-3">
-                    {book.genre.slice(0, 3).map((genre, index) => (
-                        <Badge key={index} variant="outline" className="text-xs">
+                <div className="flex flex-wrap gap-1 mb-4">
+                    {book.genre.slice(0, 2).map((genre, index) => (
+                        <Badge
+                            key={index}
+                            variant="secondary"
+                            className="text-xs font-normal"
+                        >
                             {genre}
                         </Badge>
                     ))}
-                    {book.genre.length > 3 && (
+                    {book.genre.length > 2 && (
                         <Badge variant="outline" className="text-xs">
-                            +{book.genre.length - 3}
+                            +{book.genre.length - 2}
                         </Badge>
                     )}
                 </div>
             </CardContent>
 
-            <CardFooter className="flex justify-between items-center pt-3 border-t">
+            <CardFooter className="flex justify-between items-center pt-3 px-5 pb-5 border-t bg-muted/30">
                 <div>
-                    <span className="text-2xl font-bold">
+                    <span className="text-lg font-bold text-foreground">
                         {book.currency} {book.price}
                     </span>
                     {book.stock > 0 ? (
-                        <p className="text-xs text-green-600">In stock ({book.stock})</p>
+                        <p className="text-xs text-green-600 font-medium">In stock ({book.stock})</p>
                     ) : (
-                        <p className="text-xs text-destructive">Out of stock</p>
+                        <p className="text-xs text-destructive font-medium">Out of stock</p>
                     )}
                 </div>
-                {/* // Inside BookCard footer button */}
+
                 <Link href={`/books/${book._id}`} passHref>
-                    <Button size="sm" className="gap-1" disabled={book.stock === 0}>
+                    <Button
+                        size="sm"
+                        className="gap-1 font-medium"
+                        disabled={book.stock === 0}
+                    >
                         <ShoppingCart className="h-4 w-4" />
-                        View Details
+                        Details
                     </Button>
                 </Link>
             </CardFooter>
