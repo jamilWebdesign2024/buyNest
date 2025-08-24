@@ -1,44 +1,43 @@
-import { Button } from "@/components/ui/button";
+"use client";
+
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 export default function Hero() {
-    return (
-        <section className="bg-background text-foreground relative overflow-hidden">
-            <div className="max-w-7xl mx-auto px-6 py-20 lg:py-32 flex flex-col-reverse lg:flex-row items-center gap-10">
+  return (
+    <section className="relative w-full h-[70vh] md:h-[80vh] lg:h-[90vh] overflow-hidden rounded-2xl shadow-md">
+      {/* Background Image */}
+      <Image
+        src="/banner.jpg" // 👉 public ফোল্ডারে ইমেজ রাখবে
+        alt="Bookshelf Banner"
+        fill
+        className="object-cover object-center"
+        priority
+      />
 
-                {/* Left Content */}
-                <div className="flex-1 z-10">
-                    <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-20 mb-6">
-                        Reliable Laptops, Smarter Prices
-                    </h1>
-                    <p className="text-muted-foreground mb-6 sm:text-lg">
-                        Shop refurbished laptops that save your money and the planet — quality tested, budget friendly.
-                    </p>
-                    <div className="flex gap-4 flex-wrap">
-                        <Button className="bg-primary hover:bg-primary/90 text-white">
-                            Shop Now
-                        </Button>
-                        <Button variant="outline" className="border-muted-foreground hover:bg-muted">
-                            Learn More
-                        </Button>
-                    </div>
-                </div>
+      {/* Overlay Gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/70"></div>
 
-                {/* Right Image - Full Width */}
-                <div className="flex-1 relative w-full h-[400px] lg:h-[500px]">
-                    <Image
-                        src="/banner.jpg"
-                        alt="Electronics"
-                        fill
-                        priority
-                        className="object-cover rounded-xl"
-                    />
-                </div>
-            </div>
+      {/* Text Content */}
+      <div className="relative z-10 flex flex-col items-center justify-center text-center h-full px-4">
+        <motion.h1
+          initial={{ opacity: 0, y: -40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-3xl md:text-5xl lg:text-6xl font-bold text-white drop-shadow-lg"
+        >
+          Explore Your Next Favorite Book
+        </motion.h1>
 
-            {/* Decorative Circles */}
-            <div className="absolute -top-20 -left-20 w-72 h-72 bg-primary/20 rounded-full blur-3xl pointer-events-none"></div>
-            <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-secondary/20 rounded-full blur-3xl pointer-events-none"></div>
-        </section>
-    );
+        <motion.p
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+          className="mt-4 text-lg md:text-xl lg:text-2xl max-w-2xl text-gray-200"
+        >
+          A curated collection of timeless classics & modern masterpieces.
+        </motion.p>
+      </div>
+    </section>
+  );
 }

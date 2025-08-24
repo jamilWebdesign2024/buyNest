@@ -97,7 +97,7 @@ export default function BookCard({ book }) {
                     )}
                 </div>
 
-                <Link href={`/books/${book._id}`} passHref>
+                <Link href={`/products/${book._id}`} passHref>
                     <Button
                         size="sm"
                         className="gap-1 font-medium"

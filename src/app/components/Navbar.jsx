@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
-import { Menu, ShoppingBag, LogOut, Settings } from "lucide-react";
+import { Menu, ShoppingBag, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
     Sheet,
@@ -32,14 +32,14 @@ export default function Navbar() {
     const navLinks = [
         { href: "/", label: "Home" },
         { href: "/products", label: "Products" },
-        ...(isLoggedIn ? [{ href: "/dashboard", label: "Dashboard" }] : []),
+        ...(isLoggedIn ? [{ href: "/dashboard/add-books", label: "Dashboard" }] : []),
     ];
 
     const isActive = (path) => pathname === path;
 
     return (
-        <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-            <div className="container flex h-16 items-center justify-between px-4">
+        <header className="sticky top-0 z-50 w-full mx-auto border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+            <div className="flex h-16 items-center justify-between px-10">
                 {/* Logo */}
                 <Link href="/" className="flex items-center space-x-2">
                     <ShoppingBag className="h-6 w-6 text-primary" />
@@ -81,13 +81,6 @@ export default function Navbar() {
                                         <p className="text-sm text-muted-foreground">{user?.email}</p>
                                     </div>
                                 </div>
-                                <DropdownMenuSeparator />
-                                <DropdownMenuItem asChild>
-                                    <Link href="/dashboard" className="flex items-center">
-                                        <Settings className="mr-2 h-4 w-4" />
-                                        Dashboard
-                                    </Link>
-                                </DropdownMenuItem>
                                 <DropdownMenuSeparator />
                                 <DropdownMenuItem
                                     onClick={() => signOut({ callbackUrl: "/" })}

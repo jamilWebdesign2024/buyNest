@@ -5,7 +5,7 @@ import React from 'react';
 import BookCard from '../components/booksCard';
 
 
-const BookPage = async () => {
+const AllBooks = async () => {
 
     const books = await dbConnect(collectionName.PRODUCTS).find().toArray();
     console.log(books)
@@ -28,4 +28,4 @@ const BookPage = async () => {
     );
 };
 
-export default BookPage;
+export default AllBooks;

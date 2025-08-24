@@ -1,4 +1,4 @@
-import BooksPage from "./books/page";
+// import BooksPage from "./books/page";
 import Hero from "./components/hero";
 import FeaturedBooks from "./components/HomePage/FeaturedBooks/FeaturedBooks";
 
