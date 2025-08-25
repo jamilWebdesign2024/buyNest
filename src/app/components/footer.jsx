@@ -65,6 +65,7 @@ const Footer = () => {
         {/* Bottom Section */}
         <div className="mt-6 text-center text-sm text-muted-foreground">
           © 2025 BuyNest. All rights reserved.
+
         </div>
       </div>
     </footer>
