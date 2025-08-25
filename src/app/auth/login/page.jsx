@@ -35,7 +35,7 @@ const LoginPage = () => {
                     <div className="text-center space-y-2">
                         <h1 className="text-2xl font-bold text-foreground">Sign in with email</h1>
                         <p className="text-muted-foreground">
-                            Access your ReLap account to find quality refurbished laptops at great prices
+                            Access your BuyNest account to find quality refurbished books at geat prices
                         </p>
                     </div>
 

@@ -33,7 +33,7 @@ const RegisterPage = () => {
                     <div className="text-center space-y-2">
                         <h1 className="text-2xl font-bold text-foreground">Create your account</h1>
                         <p className="text-muted-foreground">
-                            Join ReLap to discover quality refurbished laptops
+                            Join Buynest to discover quality refurbished Books
                         </p>
                     </div>
 
