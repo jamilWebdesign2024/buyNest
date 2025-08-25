@@ -1,5 +1,3 @@
-
-
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -8,6 +6,13 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function BookCard({ book }) {
+    // ✅ genre কে সবসময় array বানিয়ে নিলাম
+    const genres = Array.isArray(book.genre)
+        ? book.genre
+        : typeof book.genre === "string"
+            ? book.genre.split(",").map(g => g.trim())
+            : [];
+
     return (
         <Card className="group h-full overflow-hidden transition-all duration-300 hover:shadow-md flex flex-col">
             {/* Book Image with Overlay */}
@@ -67,8 +72,9 @@ export default function BookCard({ book }) {
                     {book.description}
                 </p>
 
+                {/* ✅ Safe genre rendering */}
                 <div className="flex flex-wrap gap-1 mb-4">
-                    {book.genre.slice(0, 2).map((genre, index) => (
+                    {genres.slice(0, 2).map((genre, index) => (
                         <Badge
                             key={index}
                             variant="secondary"
@@ -77,9 +83,9 @@ export default function BookCard({ book }) {
                             {genre}
                         </Badge>
                     ))}
-                    {book.genre.length > 2 && (
+                    {genres.length > 2 && (
                         <Badge variant="outline" className="text-xs">
-                            +{book.genre.length - 2}
+                            +{genres.length - 2}
                         </Badge>
                     )}
                 </div>

@@ -1,5 +1,3 @@
-// app/books/[id]/page.js
-import booksData from "@/data/books.json";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -9,8 +7,8 @@ import dbConnect, { collectionName } from "@/lib/dbConnect";
 import { ObjectId } from "mongodb";
 
 export default async function BookDetailsPage({ params }) {
-
     const p = await params;
+
     // Fetch product directly from MongoDB
     const book = await dbConnect(collectionName.PRODUCTS).findOne({ _id: new ObjectId(p.id) });
 
@@ -59,12 +57,17 @@ export default async function BookDetailsPage({ params }) {
                                 {book.description}
                             </p>
 
+                            {/* Safe Genre Mapping */}
                             <div className="flex flex-wrap gap-2 mb-4">
-                                {book.genre.map((g, i) => (
-                                    <Badge key={i} variant="outline">
-                                        {g}
-                                    </Badge>
-                                ))}
+                                {Array.isArray(book.genre)
+                                    ? book.genre.map((g, i) => (
+                                        <Badge key={i} variant="outline">
+                                            {g}
+                                        </Badge>
+                                    ))
+                                    : book.genre && (
+                                        <Badge variant="outline">{book.genre}</Badge>
+                                    )}
                             </div>
 
                             <div className="flex items-center gap-3 text-sm text-muted-foreground mb-2">
@@ -96,4 +99,3 @@ export default async function BookDetailsPage({ params }) {
         </div>
     );
 }
-

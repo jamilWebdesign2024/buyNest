@@ -1,16 +1,13 @@
-
-
-
 import dbConnect, { collectionName } from '@/lib/dbConnect';
 import React from 'react';
 import BookCard from '../../booksCard';
 
-
-
 const FeaturedBooks = async () => {
-
     const books = await dbConnect(collectionName.PRODUCTS).find().toArray();
-    console.log(books)
+    console.log(books);
+
+    // শুধু প্রথম 6টা বই নাও
+    const featuredBooks = books.slice(0, 6);
 
     return (
         <div className="container mx-auto py-10 px-4">
@@ -22,7 +19,7 @@ const FeaturedBooks = async () => {
             </div>
 
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {books.map((book) => (
+                {featuredBooks.map((book) => (
                     <BookCard key={book._id} book={book} />
                 ))}
             </div>

@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import { Toaster } from "@/components/ui/sonner";
 import ThemeProvider from "./providers/ThemeProvider";
 import NextAuthProvider from "./providers/NextAuthProvider";
+import Footer from "./components/footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,9 +32,7 @@ export default function RootLayout({ children }) {
             <Navbar />
             <main className="min-h-screen">{children}</main>
 
-            <footer className="text-center bg-slate-600">
-              Awesome NextJs Project
-            </footer>
+            <Footer></Footer>
             <Toaster position="top-right" />
           </ThemeProvider>
         </NextAuthProvider>
